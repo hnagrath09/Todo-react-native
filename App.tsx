@@ -1,9 +1,14 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  StyleSheet,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 import Task from "./components/task";
-
-MIcon.loadFont();
 
 export default function App() {
   return (
@@ -19,6 +24,18 @@ export default function App() {
           <Task text="Task 3" />
         </View>
       </View>
+      {/* Add new tasks */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.writeTaskWrapper}
+      >
+        <TextInput style={styles.input} placeholder="Write a task" />
+        <TouchableOpacity>
+          <View style={styles.addWrapper}>
+            <Text style={styles.addText}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -35,7 +52,40 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20
+    marginBottom: 24
   },
-  items: {}
+  items: {},
+  writeTaskWrapper: {
+    position: "absolute",
+    bottom: 20,
+    width: "100%",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    alignItems: "center"
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    backgroundColor: "#FFF",
+    borderRadius: 60,
+    borderWidth: 1,
+    borderColor: "#C0C0C0",
+    marginRight: 20
+  },
+  addWrapper: {
+    width: 60,
+    height: 60,
+    backgroundColor: "#FFF",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: "#C0C0C0"
+  },
+  addText: {
+    fontSize: 32,
+    color: "#55BCF6"
+  }
 });
