@@ -24,18 +24,27 @@ export default function App() {
     setTaskItems(prevState => [...prevState, task]);
     setTask("");
   };
+
+  const handleCompleteTask = (index: number) => {
+    setTaskItems(prevState => prevState.filter((_, i) => index !== i));
+  };
+
   return (
     <View style={styles.container}>
-      {/* Today's tasks */}
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's tasks</Text>
-
-        <View style={styles.items}>
+        <View>
           {taskItems.map((task, index) => (
-            <Task key={index} text={task} />
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleCompleteTask(index)}
+            >
+              <Task text={task} />
+            </TouchableOpacity>
           ))}
         </View>
       </View>
+
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
@@ -70,7 +79,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 24
   },
-  items: {},
   writeTaskWrapper: {
     position: "absolute",
     bottom: 20,
